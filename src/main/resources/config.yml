@@ -1,0 +1,29 @@
+Generators:
+  0:
+    Inventory-Name: "&cGenerator I"
+    Name: "I"
+    Block: NOTE_BLOCK
+    Seconds: 10
+    Max: 50
+    Items:
+    - STONE;5
+    - GRASS;4
+  1:
+    Inventory-Name: "&cGenerator II"
+    Name: "II"
+    Block: NOTE_BLOCK
+    Seconds: 5
+    Max: 100
+    Items:
+    - STONE;9
+    - GRASS;8
+Messages:
+  Warp-Cancelled: "&8You jumped off your ship and fell back to the start."
+  warp-airspace-full: "&8Your ship is currently warming up, try again later."
+  warp-teleportation-commencing: "&8Teleportation commencing, your ship is being prepared."
+  launching-to: "&8You are being launched to &6&l%landing-pad%&8. &cDo &4&lNOT &cquit until you reach your destination."
+  arrived-at: "&8You have arrived at &6&l%landing-pad%&8."
+  landing-pad-does-not-exist: "&8The landing pad, &c&l%landing-pad%&8, does not exist."
+  launch-disabled-world: "&8You can not launch in this world."
+  no-permission: "&cYou do not have permission for that command."
+  incorrect-syntax: "&cYou used incorrect command syntax."
