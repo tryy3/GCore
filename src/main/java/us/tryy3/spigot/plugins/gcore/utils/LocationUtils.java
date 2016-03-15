@@ -18,7 +18,11 @@ public class LocationUtils {
     public static Location LocationFromString(String location) {
         String[] split = location.split(";");
 
-        return new Location(Bukkit.getWorld(split[0]), Double.parseDouble(split[1]), Double.parseDouble(split[2]), Double.parseDouble(split[3]));
+        return LocationFromArray(split[0],split[1],split[2],split[3]);
+    }
+
+    public static Location LocationFromArray(String world, String x, String y, String z) {
+        return new Location(Bukkit.getWorld(world), Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z));
     }
 
     public static boolean CompareLocations(Location l1, Location l2) {

@@ -1,6 +1,7 @@
 package us.tryy3.spigot.plugins.gcore.candy;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -10,18 +11,20 @@ import java.util.List;
  * Created by tryy3 on 2016-03-12.
  */
 public class CandyTier extends BukkitRunnable {
-    private List<GeneratorBlock> locations;
     private int delay;
-    private int count;
     private int amount;
     private List<ItemStack> items;
+    private String name;
+    private Material block;
+    private String invName;
 
-    public CandyTier(List<GeneratorBlock> locations, List<ItemStack> items, int delay, int count) {
-        this.locations = locations;
+    public CandyTier(List<ItemStack> items, int delay, int amount, String name, Material block, String invName) {
         this.items = items;
         this.delay = delay;
-        this.count = count;
-        this.amount = count;
+        this.amount = amount;
+        this.name = name;
+        this.block = block;
+        this.invName = invName;
     }
 
     @Override
@@ -73,5 +76,17 @@ public class CandyTier extends BukkitRunnable {
 
     public List<ItemStack> getItems() {
         return items;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getInvName() {
+        return invName;
+    }
+
+    public Material getBlock() {
+        return block;
     }
 }

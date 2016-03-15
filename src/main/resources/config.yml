@@ -1,7 +1,7 @@
 Generators:
   0:
     Inventory-Name: "&cGenerator I"
-    Name: "I"
+    Name: "Tier I"
     Block: NOTE_BLOCK
     Seconds: 10
     Max: 50
@@ -10,7 +10,7 @@ Generators:
     - GRASS;4
   1:
     Inventory-Name: "&cGenerator II"
-    Name: "II"
+    Name: "Tier II"
     Block: NOTE_BLOCK
     Seconds: 5
     Max: 100

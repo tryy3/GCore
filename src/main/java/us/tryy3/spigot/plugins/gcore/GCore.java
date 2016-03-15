@@ -1,6 +1,8 @@
 package us.tryy3.spigot.plugins.gcore;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import us.tryy3.spigot.plugins.gcore.configs.LocationCache;
+import us.tryy3.spigot.plugins.gcore.configs.MainConfig;
 import us.tryy3.spigot.plugins.gcore.ship.ShipHandler;
 
 /**
@@ -8,6 +10,9 @@ import us.tryy3.spigot.plugins.gcore.ship.ShipHandler;
  */
 public class GCore extends JavaPlugin {
     private ShipHandler shipHandler;
+    private MainConfig mainConfig;
+    private LocationCache cache;
+
 
     @Override
     public void onEnable() {
