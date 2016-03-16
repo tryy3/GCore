@@ -7,11 +7,11 @@ import java.util.UUID;
 /**
  * Created by tryy3 on 2016-03-12.
  */
-public class PlayerLastPosition {
+public class PlayerPosition {
     private UUID uuid;
     private Location location;
 
-    public PlayerLastPosition(UUID uuid, Location location) {
+    public PlayerPosition(UUID uuid, Location location) {
         this.uuid = uuid;
         this.location = location;
     }

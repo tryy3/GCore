@@ -12,9 +12,14 @@ import org.json.JSONObject;
 import java.util.Map;
 
 /**
- * Created by dennis.planting on 3/15/2016.
+ * A class to help with the serialization of books. There are separate methods provided for the
+ * ItemMeta of enchanted books and written books
+ *
+ * @author KILL3RTACO
+ * @since TacoSerialization 1.0
  */
 public class BookSerialization {
+
     protected BookSerialization() {
     }
 
@@ -82,20 +87,20 @@ public class BookSerialization {
      * while finished, written, books will also have an author and title key.
      *
      * @param meta The BookMeta to serialize
-     * @return A JSON Representation of the given BookMeta
+     * @return A JSON Representation of the give BookMeta
      */
     public static JSONObject serializeBookMeta(BookMeta meta) {
         try {
             JSONObject root = new JSONObject();
             if (meta.hasTitle()) {
-                root.put("title",meta.getTitle());
+                root.put("title", meta.getTitle());
             }
             if (meta.hasAuthor()) {
-                root.put("author",meta.getAuthor());
+                root.put("author", meta.getAuthor());
             }
             if (meta.hasPages()) {
                 String[] pages = meta.getPages().toArray(new String[]{});
-                root.put("pages",pages);
+                root.put("pages", pages);
             }
             return root;
         } catch (JSONException e) {
@@ -118,7 +123,7 @@ public class BookSerialization {
      * Serialize BookMeta.
      *
      * @param meta   The BookMeta to serialize.
-     * @param pretty Wheter the resulting string should be 'pretty' or not
+     * @param pretty Whether the resulting string should be 'pretty' or not
      * @return the serialization string
      */
     public static String serializeBookMetaAsString(BookMeta meta, boolean pretty) {
@@ -128,9 +133,9 @@ public class BookSerialization {
     /**
      * Serialize BookMeta.
      *
-     * @param meta         The BookMeta to serialize
-     * @param pretty       Wheter the resulting string should be 'pretty' or not
-     * @param indentFactor The amount of spaces for each indention
+     * @param meta         The BookMeta to serialize.
+     * @param pretty       Whether the resulting string should be 'pretty' or not
+     * @param indentFactor The amount of spaces for each indentation
      * @return the serialization string
      */
     public static String serializeBookMetaAsString(BookMeta meta, boolean pretty, int indentFactor) {
@@ -150,7 +155,7 @@ public class BookSerialization {
      * Get EnchantmentStorageMeta from a JSON string
      *
      * @param json The string to use
-     * @return the EnchantmentStorageMeta constructed, null if an error occured
+     * @return The EnchantmentStorageMeta constructed, null if an error occurred
      */
     public static EnchantmentStorageMeta getEnchantedBookMeta(String json) {
         try {
@@ -162,17 +167,19 @@ public class BookSerialization {
     }
 
     /**
-     * Get EnchantmentStorageMeta from a JSONObject.
+     * Get EncantmentStorageMeta from a JSONObject.
      *
      * @param json The JSONObject to use
-     * @return The EnchantmentStorageMeta constructed, null if an error occured
+     * @return The EnchantmentStorageMeta constructed, null if an error occurred
      */
     public static EnchantmentStorageMeta getEnchantedBookMeta(JSONObject json) {
         try {
             ItemStack dummyItems = new ItemStack(Material.ENCHANTED_BOOK, 1);
             EnchantmentStorageMeta meta = (EnchantmentStorageMeta) dummyItems.getItemMeta();
             if (json.has("enchantments")) {
-                Map<Enchantment, Integer> enchants = EnchantmentSerialization.getEnchantments(json.getString("enchantments"));
+                Map<Enchantment, Integer>
+                        enchants =
+                        EnchantmentSerialization.getEnchantments(json.getString("enchantments"));
                 for (Enchantment e : enchants.keySet()) {
                     meta.addStoredEnchant(e, enchants.get(e), true);
                 }
@@ -193,8 +200,8 @@ public class BookSerialization {
     public static JSONObject serializeEnchantedBookMeta(EnchantmentStorageMeta meta) {
         try {
             JSONObject root = new JSONObject();
-            String enchants = EnchantmentSerialization.serializeEnchanments(meta.getStoredEnchants());
-            root.put("enchantments",enchants);
+            String enchants = EnchantmentSerialization.serializeEnchantments(meta.getStoredEnchants());
+            root.put("enchantments", enchants);
             return root;
         } catch (JSONException e) {
             e.printStackTrace();
@@ -205,7 +212,7 @@ public class BookSerialization {
     /**
      * Serialize EnchantmentStorageMeta into string form.
      *
-     * @param meta The EnchantmentStorageMeta to use
+     * @param meta The EnchantmentStorageMet to use
      * @return The serialized string
      */
     public static String serializeEnchantedBookMetaAsString(EnchantmentStorageMeta meta) {
@@ -215,31 +222,35 @@ public class BookSerialization {
     /**
      * Serialize EnchantmentStorageMeta into string form.
      *
-     * @param meta  The EnchantmentStorageMeta to use
+     * @param meta   The EnchantmentStorageMet to use
      * @param pretty Whether the resulting string should be 'pretty' or not
      * @return The serialized string
      */
-    public static String serializeEnchantedBookMetaAsString(EnchantmentStorageMeta meta, boolean pretty) {
+    public static String serializeEnchantedBookMetaAsString(EnchantmentStorageMeta meta,
+                                                            boolean pretty) {
         return serializeEnchantedBookMetaAsString(meta, pretty, 5);
     }
 
     /**
      * Serialize EnchantmentStorageMeta into string form.
      *
-     * @param meta         The EnchantmentStorageMeta to use
+     * @param meta         The EnchantmentStorageMet to use
      * @param pretty       Whether the resulting string should be 'pretty' or not
      * @param indentFactor The amount of spaces to use for a tab
      * @return The serialized string
      */
-    public static String serializeEnchantedBookMetaAsString(EnchantmentStorageMeta meta, boolean pretty, int indentFactor) {
+    public static String serializeEnchantedBookMetaAsString(EnchantmentStorageMeta meta,
+                                                            boolean pretty, int indentFactor) {
         try {
-            if (pretty)  {
+            if (pretty) {
                 return serializeEnchantedBookMeta(meta).toString(indentFactor);
             } else {
                 return serializeEnchantedBookMeta(meta).toString();
             }
         } catch (JSONException e) {
             e.printStackTrace();
+            return null;
         }
     }
+
 }

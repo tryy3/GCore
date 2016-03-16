@@ -1,11 +1,12 @@
 package us.tryy3.spigot.plugins.gcore.configs;
 
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 import us.tryy3.spigot.plugins.gcore.GCore;
 import us.tryy3.spigot.plugins.gcore.ship.Direction;
 import us.tryy3.spigot.plugins.gcore.ship.Landzone;
-import us.tryy3.spigot.plugins.gcore.ship.PlayerLastPosition;
+import us.tryy3.spigot.plugins.gcore.ship.PlayerPosition;
 import us.tryy3.spigot.plugins.gcore.ship.Warp;
 import us.tryy3.spigot.plugins.gcore.utils.LocationUtils;
 
@@ -19,13 +20,14 @@ import java.util.*;
 public class LocationCache {
     private Map<String, Warp> warps;
     private Map<String, Landzone> landzones;
-    private Map<UUID,PlayerLastPosition> warpPlayers;
+    private Map<UUID, PlayerPosition> warpPlayers;
 
     private File file;
     private YamlConfiguration config;
     private GCore core;
 
-    public LocationCache(File file) {
+    public LocationCache(File file, GCore core) {
+        this.core = core;
         this.file = file;
         this.config = YamlConfiguration.loadConfiguration(file);
         load();
@@ -35,7 +37,7 @@ public class LocationCache {
         return landzones.containsKey(name);
     }
 
-    public void save() {
+    public void saveWarps() {
         Map<String, Map<String, Object>> warps = new HashMap<>();
 
         for (Map.Entry<String, Warp> entry : this.warps.entrySet()) {
@@ -48,21 +50,33 @@ public class LocationCache {
             warps.put(entry.getKey(), warp);
         }
 
+        config.createSection("warps",warps);
+        save();
+    }
+
+    public void saveLandzones() {
         Map<String, String> landzones = new HashMap<>();
 
         for (Landzone landzone : this.landzones.values()) {
             landzones.put(landzone.getName(), LocationUtils.LocationToString(landzone.getLocation()));
         }
 
+        config.createSection("landzones",landzones);
+        save();
+    }
+
+    public void savePlayers() {
         Map<String, String> players = new HashMap<>();
 
-        for (PlayerLastPosition lastPosition : this.warpPlayers.values()) {
+        for (PlayerPosition lastPosition : this.warpPlayers.values()) {
             players.put(lastPosition.getUuid().toString(),LocationUtils.LocationToString(lastPosition.getLocation()));
         }
 
-        config.createSection("warps",warps);
-        config.createSection("landzones",landzones);
         config.createSection("players",players);
+        save();
+    }
+
+    private void save() {
         try {
             config.save(file);
         } catch (IOException e) {
@@ -111,7 +125,30 @@ public class LocationCache {
         for (Map.Entry<String, Object> player : warps.entrySet()) {
             UUID uuid = UUID.fromString(player.getKey());
 
-            this.warpPlayers.put(uuid, new PlayerLastPosition(uuid, LocationUtils.LocationFromString((String) player.getValue())));
+            this.warpPlayers.put(uuid, new PlayerPosition(uuid, LocationUtils.LocationFromString((String) player.getValue())));
         }
+    }
+
+    public YamlConfiguration getConfig() {
+        return config;
+    }
+
+    public boolean isPlayer(UUID uuid) {
+        return warpPlayers.containsKey(uuid);
+    }
+
+    public void addPlayer(UUID uuid, PlayerPosition position) {
+        warpPlayers.put(uuid, position);
+        savePlayers();
+    }
+
+    public void delPlayer(UUID uuid) {
+        warpPlayers.remove(uuid);
+        savePlayers();
+    }
+
+    public void teleportPlayer(UUID uuid) {
+        Bukkit.getPlayer(uuid).teleport(warpPlayers.get(uuid).getLocation());
+        delPlayer(uuid);
     }
 }

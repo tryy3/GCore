@@ -10,31 +10,24 @@ import us.tryy3.spigot.plugins.gcore.GCore;
 
 import java.util.UUID;
 
-import static us.tryy3.spigot.plugins.gcore.ship.Direction.*;
-
 /**
  * Created by tryy3 on 2016-03-12.
  */
-public class ShipObject extends BukkitRunnable {
+public class RunningShip extends BukkitRunnable {
     private UUID uuid;
     private double count;
-    private PlayerLastPosition lastPosition;
     private ArmorStand ship;
     private Warp warp;
     private GCore core;
     private Direction direction;
 
-    public ShipObject(GCore core, UUID uuid, PlayerLastPosition lastPosition, ArmorStand ship) {
-        this(core,uuid,lastPosition,ship,(Math.random()<0.5) ? SOUTH : NORTH)
-    }
-
-    public ShipObject(GCore core, UUID uuid, PlayerLastPosition lastPosition, ArmorStand ship, Direction direction) {
+    public RunningShip(GCore core, UUID uuid, Warp warp, ArmorStand ship, Direction direction) {
         this.uuid = uuid;
         this.core = core;
-        this.lastPosition = lastPosition;
         this.ship = ship;
         this.direction = direction;
         this.count = Math.random()*10+21;
+        this.warp = warp;
     }
 
     @Override
@@ -48,18 +41,14 @@ public class ShipObject extends BukkitRunnable {
         count--;
         if (count >= 0) return;
 
-        ship.eject();
-        ship.remove();
+        core.getShipHandler().deactivateShip(player.getUniqueId());
+        core.getCache().teleportPlayer(player.getUniqueId());
+        player.sendMessage(core.getMainConfig().getConfig().getString("Messages.Arrived-At").replace("%landing-pad%",warp.getTo().getName()));
 
-        player.teleport(warp.getLocation());
-        player.sendMessage(core.mainConfig.arrivedAt.replace("%landing-pad%",warp.getName()));
-
-        if (core.mainConfig.warpCommandOnArrival) {
-            String toExecute = core.mainConfig.warpCommandToExecute.replace("%player%", player.getName());
+        if (warp.getTo().hasCommand()) {
+            String toExecute = warp.getTo().getCommand().replace("%player%", player.getName());
             Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), toExecute);
         }
-
-        core.shipHandler.finishShip(uuid);
         this.cancel();
     }
 
@@ -86,7 +75,7 @@ public class ShipObject extends BukkitRunnable {
         }
     }
 
-    public PlayerLastPosition getLastPosition() {
-        return lastPosition;
+    public ArmorStand getShip() {
+        return ship;
     }
 }

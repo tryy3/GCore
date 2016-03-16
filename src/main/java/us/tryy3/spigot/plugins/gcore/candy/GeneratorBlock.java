@@ -1,5 +1,6 @@
 package us.tryy3.spigot.plugins.gcore.candy;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -21,10 +22,18 @@ public class GeneratorBlock {
     private int count;
     private CandyTier tier;
 
-    public GeneratorBlock(Location location, Inventory inventory) {
+    public GeneratorBlock(Location location, CandyTier tier) {
+        this(location, tier, Bukkit.createInventory(null, 54, tier.getInvName()));
+    }
+    public GeneratorBlock(Location location,CandyTier tier, Inventory inventory) {
+        this(location, tier, inventory, tier.getAmount());
+    }
+    public GeneratorBlock(Location location, CandyTier tier, Inventory inventory, int count) {
         this.location = location;
         this.inventory = inventory;
         this.hologram = createHologram();
+        this.tier = tier;
+        this.count = count;
     }
 
     private Hologram createHologram() {

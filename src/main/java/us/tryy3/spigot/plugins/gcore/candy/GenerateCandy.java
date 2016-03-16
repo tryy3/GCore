@@ -1,5 +1,6 @@
 package us.tryy3.spigot.plugins.gcore.candy;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -7,6 +8,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import us.tryy3.spigot.plugins.gcore.GCore;
+import us.tryy3.spigot.plugins.gcore.utils.InventoryToBase64;
+import us.tryy3.spigot.plugins.gcore.utils.InventoryUtils;
 import us.tryy3.spigot.plugins.gcore.utils.LocationUtils;
 
 import java.util.ArrayList;
@@ -25,11 +28,11 @@ public class GenerateCandy extends BukkitRunnable {
     public GenerateCandy(GCore core) {
         this.core = core;
 
-
+        load();
     }
 
     public void load() {
-        YamlConfiguration tierConfig = core.config().getConfig();
+        YamlConfiguration tierConfig = core.getMainConfig().getConfig();
         for (Map.Entry<String, Object> tiers : tierConfig.getConfigurationSection("Generators").getValues(false).entrySet()) {
             List<ItemStack> items = new ArrayList<>();
             for (String s : tierConfig.getStringList("Generators."+tiers.getKey()+".Items")) {
@@ -44,21 +47,68 @@ public class GenerateCandy extends BukkitRunnable {
             String invName = tierConfig.getString("Generators."+tiers.getKey()+".Inventory-Name");
             Material block = Material.getMaterial(tierConfig.getString("Generators."+tiers.getKey()+".Block"));
 
-            this.tiers.put(tiers.getKey(), new CandyTier(items, delay, amount, name, block, invName));
+            this.tiers.put(tiers.getKey(), new CandyTier(items, delay, amount, name, block, invName, tiers.getKey()));
         }
 
         for (String s : core.getCache().getConfig().getStringList("Generators")) {
             String[] split = s.split(";");
-            Location location = LocationUtils.LocationFromArray(split[0],split[1],split[2],split[3]);
+            CandyTier tier = tiers.get(split[0]);
+            Location location = LocationUtils.LocationFromArray(split[1],split[2],split[3],split[4]);
 
-            Inventory inventory =
+            Inventory inventory = Bukkit.createInventory(null, 54, tier.getInvName());
+            InventoryToBase64.setInventory(inventory, split[5]);
 
-            GeneratorBlock block = new GeneratorBlock()
+            GeneratorBlock block = new GeneratorBlock(location, tier, inventory, Integer.parseInt(split[0]));
+            blocks.add(block);
         }
     }
 
     public void save() {
+        YamlConfiguration cache = core.getCache().getConfig();
 
+        List<String> output = new ArrayList<>();
+
+        for (GeneratorBlock block : blocks) {
+            String s = "";
+            s+=block.getTier().getKey()+";";
+            s+=LocationUtils.LocationToString(block.getLocation());
+            s+=InventoryToBase64.serializeInventoryAsString(block.getInventory());
+            output.add(s);
+        }
+
+        cache.set("Generators",output);
+    }
+
+    public boolean isTier(String key) {
+        return tiers.containsKey(key);
+    }
+
+    public boolean isGenerator(Location location) {
+        for (GeneratorBlock block : blocks) {
+            if (LocationUtils.CompareLocations(location, block.getLocation())) return true;
+        }
+        return false;
+    }
+
+    public GeneratorBlock getGenerator(Location location) {
+        for (GeneratorBlock block : blocks) {
+            if (LocationUtils.CompareLocations(location, block.getLocation())) return block;
+        }
+        return null;
+    }
+
+    public void addGenerator(Location location, String key) {
+        CandyTier tier = tiers.get(key);
+        GeneratorBlock block = new GeneratorBlock(location, tier);
+        blocks.add(block);
+        save();
+    }
+
+    public void delGenerator(Location location) {
+        for (GeneratorBlock block : blocks) {
+            if (LocationUtils.CompareLocations(location, block.getLocation())) blocks.remove(block);
+        }
+        save();
     }
 
     @Override
@@ -71,10 +121,10 @@ public class GenerateCandy extends BukkitRunnable {
             if (block.size() >= block.getTier().getAmount()) continue;
 
             for (ItemStack is : block.getTier().getItems()) {
-                block.getInventory().addItem(is);
+                if (!(InventoryUtils.fillInventory(block.getInventory(), is))) break;
             }
 
-
+            block.updateHologram();
         }
     }
 }
