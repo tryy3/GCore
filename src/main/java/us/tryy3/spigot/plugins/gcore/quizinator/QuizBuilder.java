@@ -19,12 +19,31 @@ public class QuizBuilder {
     }
 
     public class Quiz {
-        public List<QuizStep> steps;
+        private List<QuizStep> steps;
+        private int currentStep = 0;
+        private List<String> msgs = new ArrayList<>();
 
         public Quiz(List<QuizStep> steps) {
             this.steps = steps;
         }
 
-        public 
+        public boolean next() {
+            return true;
+        }
+
+        public boolean hasNext() {
+            return (currentStep >= (steps.size()-1));
+        }
+
+        public boolean nextStep(String arg) {
+            if (!(steps.get(currentStep)).next(arg)) return false;
+            msgs.add(steps.get(currentStep).getMsg());
+            steps.get(currentStep).finish(msgs);
+            return true;
+        }
+
+        public void failStep() {
+            steps.get(currentStep).fail();
+        }
     }
 }
