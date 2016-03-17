@@ -8,4 +8,23 @@ import java.util.List;
  */
 public class QuizBuilder {
     public List<QuizStep> steps = new ArrayList<>();
+
+    public QuizBuilder() {
+
+    }
+
+    public QuizBuilder addStep(QuizStep step) {
+        this.steps.add(step);
+        return this;
+    }
+
+    public class Quiz {
+        public List<QuizStep> steps;
+
+        public Quiz(List<QuizStep> steps) {
+            this.steps = steps;
+        }
+
+        public 
+    }
 }

@@ -2,33 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0a4700e0-e468-4af4-ae32-5d136824220a" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/commands/CandyGenCMD.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/WaitingShip.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/ColorSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/EnchantmentSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/FireworkEffectSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/FireworkSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/InventoryUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/LeatherArmorSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/Serializer.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/SkullSerialization.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/Util.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/PlayerLastPosition.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/PlayerPosition.java" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/ShipObject.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/RunningShip.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizBuilder.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizHandler.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizListener.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizStep.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/GCore.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/GCore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/CandyTier.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/CandyTier.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/GenerateCandy.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/GenerateCandy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/GeneratorBlock.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/candy/GeneratorBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/configs/LocationCache.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/configs/LocationCache.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/listeners/GeneratorListener.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/listeners/GeneratorListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/listeners/ShipListener.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/listeners/ShipListener.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Landzone.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Landzone.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/ShipHandler.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/ShipHandler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/BookSerialization.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/BookSerialization.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/InventoryToBase64.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/InventoryToBase64.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/SingleItemSerialization.java" afterPath="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/utils/SingleItemSerialization.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/resources/config.yml" afterPath="$PROJECT_DIR$/src/main/resources/config.yml" />
     </list>
     <ignored path="GCore.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -74,11 +52,65 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CandyGenCMD.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CandyGenCMD.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/commands/CandyGenCMD.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.09497207">
+            <state vertical-scroll-proportion="0.0">
               <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuizHandler.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizHandler.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#351#352#0" expanded="true" />
+                <element signature="e#400#401#0" expanded="true" />
+                <element signature="e#440#441#0" expanded="true" />
+                <element signature="e#486#487#0" expanded="true" />
+                <element signature="e#533#534#0" expanded="true" />
+                <element signature="e#583#584#0" expanded="true" />
+                <element signature="e#626#627#0" expanded="true" />
+                <element signature="e#684#685#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuizBuilder.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizBuilder.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.51284915">
+              <caret line="27" column="15" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#472#473#0" expanded="true" />
+                <element signature="e#514#515#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuizListener.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizListener.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="QuizStep.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizStep.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -108,54 +140,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Direction.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Direction.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="PlayerPosition.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/PlayerPosition.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="RunningShip.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/RunningShip.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
               <caret line="75" column="5" selection-start-line="75" selection-start-column="5" selection-end-line="75" selection-end-column="5" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Landzone.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Landzone.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="34" column="31" selection-start-line="34" selection-start-column="31" selection-end-line="34" selection-end-column="31" />
-              <folding>
-                <element signature="e#713#714#0" expanded="true" />
-                <element signature="e#751#752#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="NBTReflectionUtils.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/nbt/NBTReflectionUtils.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -205,6 +194,10 @@
         <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/listeners/GeneratorListener.java" />
         <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/configs/LocationCache.java" />
         <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/GCore.java" />
+        <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator.java" />
+        <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizHandler.java" />
+        <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/Quiz.java" />
+        <option value="$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizBuilder.java" />
       </list>
     </option>
   </component>
@@ -361,6 +354,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="ship" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GCore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="GCore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="gcore" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="quizinator" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -943,12 +966,12 @@
       <updated>1457952864811</updated>
       <workItem from="1457952868153" duration="2708000" />
       <workItem from="1457959024453" duration="7945000" />
-      <workItem from="1458085503643" duration="9652000" />
+      <workItem from="1458085503643" duration="10795000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="20305000" />
+    <option name="totallyTimeSpent" value="21448000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="32" width="1936" height="1056" extended-state="6" />
@@ -994,38 +1017,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/nbt/NBTItem.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="4" column="13" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/nbt/NBTReflectionUtils.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="13" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Direction.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="12" selection-start-line="5" selection-start-column="12" selection-end-line="5" selection-end-column="12" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/Landzone.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/ship/PlayerPosition.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1257,7 +1248,7 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="14" column="15" selection-start-line="14" selection-start-column="15" selection-end-line="14" selection-end-column="15" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="imports" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1412,9 +1403,55 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/commands/CandyGenCMD.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09497207">
+        <state vertical-scroll-proportion="0.0">
           <caret line="5" column="24" selection-start-line="5" selection-start-column="24" selection-end-line="5" selection-end-column="24" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizListener.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="25" selection-start-line="5" selection-start-column="25" selection-end-line="5" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizStep.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="21" selection-start-line="5" selection-start-column="21" selection-end-line="5" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizHandler.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="25" column="43" selection-start-line="25" selection-start-column="43" selection-end-line="25" selection-end-column="43" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#351#352#0" expanded="true" />
+            <element signature="e#400#401#0" expanded="true" />
+            <element signature="e#440#441#0" expanded="true" />
+            <element signature="e#486#487#0" expanded="true" />
+            <element signature="e#533#534#0" expanded="true" />
+            <element signature="e#583#584#0" expanded="true" />
+            <element signature="e#626#627#0" expanded="true" />
+            <element signature="e#684#685#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/us/tryy3/spigot/plugins/gcore/quizinator/QuizBuilder.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51284915">
+          <caret line="27" column="15" selection-start-line="27" selection-start-column="15" selection-end-line="27" selection-end-column="15" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#472#473#0" expanded="true" />
+            <element signature="e#514#515#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
