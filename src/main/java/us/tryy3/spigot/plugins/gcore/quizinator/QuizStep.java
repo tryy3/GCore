@@ -6,13 +6,17 @@ import java.util.List;
  * Created by tryy3 on 2016-03-17.
  */
 public abstract class QuizStep {
-    String msg;
+    String answer;
     public QuizStep() {
 
     }
 
+    public void init() {
+        return;
+    }
+
     public boolean next(String msg) {
-        this.msg = msg;
+        this.answer = msg;
         return true;
     }
 
@@ -24,7 +28,7 @@ public abstract class QuizStep {
 
     }
 
-    public String getMsg() {
-        return msg;
+    public String getAnswer() {
+        return answer;
     }
 }

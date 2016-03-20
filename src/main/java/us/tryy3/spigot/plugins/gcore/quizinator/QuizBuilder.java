@@ -18,6 +18,10 @@ public class QuizBuilder {
         return this;
     }
 
+    public Quiz build() {
+        return new Quiz(steps);
+    }
+
     public class Quiz {
         private List<QuizStep> steps;
         private int currentStep = 0;
@@ -27,8 +31,12 @@ public class QuizBuilder {
             this.steps = steps;
         }
 
-        public boolean next() {
-            return true;
+        public void init() {
+            steps.get(currentStep).init();
+        }
+
+        public void next() {
+            currentStep++;
         }
 
         public boolean hasNext() {
@@ -37,7 +45,7 @@ public class QuizBuilder {
 
         public boolean nextStep(String arg) {
             if (!(steps.get(currentStep)).next(arg)) return false;
-            msgs.add(steps.get(currentStep).getMsg());
+            msgs.add(steps.get(currentStep).getAnswer());
             steps.get(currentStep).finish(msgs);
             return true;
         }

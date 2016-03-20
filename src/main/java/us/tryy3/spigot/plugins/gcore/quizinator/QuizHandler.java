@@ -17,6 +17,7 @@ public class QuizHandler {
 
     public void addPlayer(UUID uuid, Quiz quiz) {
         this.activeQuizes.put(uuid, quiz);
+        quiz.init();
     }
 
     public void delPlayer(UUID uuid) {

@@ -6,16 +6,18 @@ import java.util.List;
  * Created by tryy3 on 2016-03-13.
  */
 public class Warp {
+    private String name;
     private Landzone from;
     private Landzone to;
-    private Direction direction;
-    private List<String> ships;
 
-    public Warp(Landzone from, Landzone to, Direction direction, List<String> ships) {
+    public Warp(String name, Landzone from, Landzone to) {
+        this.name = name;
         this.from = from;
         this.to = to;
-        this.direction = direction;
-        this.ships = ships;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public Landzone getFrom() {
@@ -24,13 +26,5 @@ public class Warp {
 
     public Landzone getTo() {
         return to;
-    }
-
-    public Direction getDirection() {
-        return direction;
-    }
-
-    public List<String> getShips() {
-        return ships;
     }
 }

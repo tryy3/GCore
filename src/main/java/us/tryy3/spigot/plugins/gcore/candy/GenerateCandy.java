@@ -83,6 +83,10 @@ public class GenerateCandy extends BukkitRunnable {
         return tiers.containsKey(key);
     }
 
+    public CandyTier getTier(String key) {
+        return tiers.get(key);
+    }
+
     public boolean isGenerator(Location location) {
         for (GeneratorBlock block : blocks) {
             if (LocationUtils.CompareLocations(location, block.getLocation())) return true;

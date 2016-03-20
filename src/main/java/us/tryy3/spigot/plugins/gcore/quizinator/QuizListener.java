@@ -24,7 +24,10 @@ public class QuizListener implements Listener {
             return;
         }
         quiz.next();
-        if (quiz.hasNext()) return;
+        if (quiz.hasNext()) {
+            quiz.init();
+            return;
+        }
         this.handler.delPlayer(e.getPlayer().getUniqueId());
     }
 }

@@ -7,6 +7,8 @@ import us.tryy3.spigot.plugins.gcore.configs.LocationCache;
 import us.tryy3.spigot.plugins.gcore.configs.MainConfig;
 import us.tryy3.spigot.plugins.gcore.listeners.GeneratorListener;
 import us.tryy3.spigot.plugins.gcore.listeners.ShipListener;
+import us.tryy3.spigot.plugins.gcore.quizinator.QuizHandler;
+import us.tryy3.spigot.plugins.gcore.quizinator.QuizListener;
 import us.tryy3.spigot.plugins.gcore.ship.ShipHandler;
 
 import java.io.File;
@@ -19,7 +21,7 @@ public class GCore extends JavaPlugin {
     private MainConfig mainConfig;
     private LocationCache cache;
     private GenerateCandy candy;
-
+    private QuizHandler quizHandler;
 
     @Override
     public void onEnable() {
@@ -27,9 +29,11 @@ public class GCore extends JavaPlugin {
         this.cache = new LocationCache(new File(getDataFolder()+"/cache.yml"), this);
         this.candy = new GenerateCandy(this);
         this.shipHandler = new ShipHandler(this);
+        this.quizHandler = new QuizHandler();
 
         Bukkit.getServer().getPluginManager().registerEvents(new ShipListener(this), this);
         Bukkit.getServer().getPluginManager().registerEvents(new GeneratorListener(this), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new QuizListener(this.quizHandler), this);
     }
 
     @Override
@@ -51,5 +55,9 @@ public class GCore extends JavaPlugin {
 
     public GenerateCandy getCandy() {
         return candy;
+    }
+
+    public QuizHandler getQuizHandler() {
+        return quizHandler;
     }
 }

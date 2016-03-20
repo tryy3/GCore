@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import us.tryy3.spigot.plugins.gcore.GCore;
 
@@ -26,31 +27,45 @@ public class ShipHandler {
         this.ships.put("landzone", new ItemStack(Material.CARPET,1,Byte.valueOf("1")));
     }
 
-    public void startShip(UUID uuid, Landzone landzone, String ship, Direction direction) {
-        Location location = landzone.getLocation();
+    private ArmorStand createShip(UUID uuid, Landzone landzone, Location location) {
+        Player player = Bukkit.getPlayer(uuid);
         ArmorStand stand = location.getWorld().spawn(location, ArmorStand.class);
-        stand.setHelmet(ships.get(ship));
+        stand.setHelmet(ships.get(landzone.getShip(player)));
         stand.setVisible(false);
         stand.setGravity(false);
-        stand.setPassenger(Bukkit.getPlayer(uuid));
+        stand.setPassenger(player);
+        return stand;
+    }
 
-        WaitingShip wait = new WaitingShip(landzone, uuid, stand, direction);
-        waitingShip.put(uuid, wait);
-
+    private void addPosition(UUID uuid, Location location) {
         PlayerPosition position = new PlayerPosition(uuid, location);
         core.getCache().addPlayer(uuid, position);
     }
 
+    public void startShip(UUID uuid, Landzone landzone) {
+        Location location = landzone.getLocation();
+        ArmorStand stand = createShip(uuid, landzone, location);
+
+        WaitingShip wait = new WaitingShip(landzone, uuid, stand, landzone.getDirection());
+        waitingShip.put(uuid, wait);
+
+        addPosition(uuid, location);
+    }
+
     public void activateShip(UUID uuid, Warp warp) {
-        WaitingShip wait = waitingShip.get(uuid);
-        RunningShip running = new RunningShip(core, uuid, warp, wait.getStand(), wait.getDirection());
+        ArmorStand stand;
+
+        if (waitingShip.containsKey(uuid)) {
+            stand = waitingShip.get(uuid).getStand();
+            waitingShip.remove(uuid);
+        } else {
+            stand = createShip(uuid, warp.getFrom(), warp.getFrom().getLocation());
+        }
+
+        RunningShip running = new RunningShip(core, uuid, warp, stand, warp.getFrom().getDirection());
         runningShips.put(uuid, running);
 
-        waitingShip.remove(uuid);
-        core.getCache().delPlayer(uuid);
-
-        PlayerPosition position = new PlayerPosition(uuid, warp.getTo().getLocation());
-        core.getCache().addPlayer(uuid, position);
+        addPosition(uuid, warp.getTo().getLocation());
     }
 
     public void deactivateShip(UUID uuid) {
@@ -70,6 +85,12 @@ public class ShipHandler {
 
     public boolean isShip(String ship) {
         return this.ships.containsKey(ship);
+    }
+
+    public List<String> getShips() {
+        List<String> output = new ArrayList<>();
+        output.addAll(this.ships.keySet());
+        return output;
     }
 
     public boolean isWaiting(UUID uuid) {
