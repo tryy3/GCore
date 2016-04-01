@@ -2,13 +2,12 @@ package us.tryy3.spigot.plugins.gcore.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.configuration.file.YamlConfiguration;
 import us.tryy3.spigot.plugins.gcore.GCore;
-import us.tryy3.spigot.plugins.gcore.quizinator.QuizBuilder;
-import us.tryy3.spigot.plugins.gcore.quizinator.gcore.QuizAddWarp;
-import us.tryy3.spigot.plugins.gcore.quizinator.gcore.QuizMessage;
+import us.tryy3.spigot.plugins.gcore.ship.Warp;
+import us.tryy3.spigot.plugins.gcore.utils.ChatUtils;
 
-import java.util.Arrays;
+import java.util.Map;
 
 /**
  * Created by tryy3 on 2016-03-12.
@@ -21,17 +20,52 @@ class SetWarpCMD implements SubCommand {
     }
 
     @Override
-    public void onCommand(CommandSender sender, Command command, String s, String[] strings) {
+    public void onCommand(CommandSender sender, Command command, String s, String[] strings, Map<String, String> flags) {
+        YamlConfiguration config = core.getMainConfig().getConfig();
         if (!(sender.hasPermission("gcore.admin")) || !(sender.hasPermission("gcore.cmd.setwarp"))) {
-            sender.sendMessage(core.getMainConfig().getConfig().getString("No-Permission"));
+            ChatUtils.chat(sender, config.getString("Messages.No-Permission"));
             return;
         }
 
-        Player player = (Player) sender;
-        QuizBuilder builder = new QuizBuilder();
-        builder.addStep(new QuizMessage(null, Arrays.asList("Please choose a warp name."), null, null, player.getUniqueId()));
-        builder.addStep(new QuizMessage(null, Arrays.asList("Please choose a landzone to warp from."), null, null, player.getUniqueId()));
-        builder.addStep(new QuizAddWarp(null, Arrays.asList("Please choose a landzone to warp to."), null, null, player.getUniqueId(), core));
-        core.getQuizHandler().addPlayer(player.getUniqueId(), builder.build());
+        String name, from, to;
+
+        if (flags.containsKey("name")) name = flags.get("name");
+        else if (flags.containsKey("n")) name = flags.get("n");
+        else {
+            ChatUtils.chat(sender, config.getString("Messages.Incorrect-Syntax"));
+            return;
+        }
+
+        if (flags.containsKey("from")) from = flags.get("from");
+        else if (flags.containsKey("f")) from = flags.get("f");
+        else {
+            ChatUtils.chat(sender, config.getString("Messages.Incorrect-Syntax"));
+            return;
+        }
+
+        if (flags.containsKey("to")) to = flags.get("to");
+        else if (flags.containsKey("t")) to = flags.get("t");
+        else {
+            ChatUtils.chat(sender, config.getString("Messages.Incorrect-Syntax"));
+            return;
+        }
+
+        if (core.getCache().isWarp(name)) {
+            ChatUtils.chat(sender, config.getString("Messages.Already-Warp").replace("%fail%", name));
+            return;
+        }
+
+        if (!(core.getCache().isLandzone(from))) {
+            ChatUtils.chat(sender, config.getString("Messages.Invalid-Landzone").replace("%fail%", from));
+            return;
+        }
+
+        if (!(core.getCache().isLandzone(to))) {
+            ChatUtils.chat(sender, config.getString("Messages.Invalid-Landzone").replace("%fail%", to));
+            return;
+        }
+
+        core.getCache().addWarp(new Warp(name,core.getCache().getLandzone(from), core.getCache().getLandzone(to)));
+        ChatUtils.chat(sender, config.getString("Messages.Creation-Warp").replace("%warp%", name));
     }
 }

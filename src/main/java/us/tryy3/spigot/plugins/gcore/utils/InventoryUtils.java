@@ -26,12 +26,14 @@ public class InventoryUtils {
         return true;
     }
 
-    public static boolean fillInventory(Inventory inventory, ItemStack stack) {
+    public static boolean fillInventory(Inventory inventory, ItemStack stack, int size, int max) {
         ItemStack dummyStack = stack.clone();
         dummyStack.setAmount(1);
         for (int i = 0; i < stack.getAmount(); i++) {
             HashMap<Integer, ItemStack> drops = inventory.addItem(dummyStack);
+            size++;
             if (!(drops.isEmpty())) return false;
+            if (size >= max) return false;
         }
         return true;
     }

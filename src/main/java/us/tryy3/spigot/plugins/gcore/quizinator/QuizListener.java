@@ -18,9 +18,14 @@ public class QuizListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
         if (!(this.handler.hasPlayer(e.getPlayer().getUniqueId()))) return;
+        e.setCancelled(true);
+        if (e.getMessage().toLowerCase().equalsIgnoreCase("quit")) {
+            this.handler.delPlayer(e.getPlayer().getUniqueId());
+            return;
+        }
         Quiz quiz = this.handler.getPlayer(e.getPlayer().getUniqueId());
         if (!(quiz.nextStep(e.getMessage()))) {
-            quiz.failStep();
+            quiz.failStep(e.getMessage());
             return;
         }
         quiz.next();

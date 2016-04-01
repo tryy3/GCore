@@ -1,16 +1,16 @@
 package us.tryy3.spigot.plugins.gcore.candy;
 
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import us.tryy3.spigot.plugins.gcore.GCore;
 import us.tryy3.spigot.plugins.gcore.utils.ChatUtils;
-import us.tryy3.spigot.plugins.gcore.utils.Hologram;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by tryy3 on 2016-03-12.
@@ -21,27 +21,28 @@ public class GeneratorBlock {
     private Inventory inventory;
     private int count;
     private CandyTier tier;
+    private GCore core;
 
-    public GeneratorBlock(Location location, CandyTier tier) {
-        this(location, tier, Bukkit.createInventory(null, 54, tier.getInvName()));
+    public GeneratorBlock(GCore core, Location location, CandyTier tier) {
+        this(core, location, tier, Bukkit.createInventory(null, 54, ChatUtils.format(tier.getInvName())));
     }
-    public GeneratorBlock(Location location,CandyTier tier, Inventory inventory) {
-        this(location, tier, inventory, tier.getAmount());
+    public GeneratorBlock(GCore core, Location location, CandyTier tier, Inventory inventory) {
+        this(core, location, tier, inventory, tier.getDelay());
     }
-    public GeneratorBlock(Location location, CandyTier tier, Inventory inventory, int count) {
+    public GeneratorBlock(GCore core, Location location, CandyTier tier, Inventory inventory, int count) {
+        this.core = core;
         this.location = location;
         this.inventory = inventory;
-        this.hologram = createHologram();
         this.tier = tier;
         this.count = count;
+        createHologram();
     }
 
-    private Hologram createHologram() {
-        List<String> strings = ChatUtils.StringsToArray("&d&lCandy Generator","&7[&c"+size()+" / "+getTier().getAmount()+"&7]","&7[&5"+getTier().getName()+"&7]");
-
-        Hologram hologram = new Hologram(location,strings,0.2);
-        hologram.spawn();
-        return hologram;
+    private void createHologram() {
+        Location newloc = location.clone();
+        newloc.add(0.5, 2.1, 0.5);
+        this.hologram = HologramsAPI.createHologram(core, newloc);
+        updateHologram();
     }
 
     public Location getLocation() {
@@ -82,9 +83,16 @@ public class GeneratorBlock {
         return tier;
     }
 
+    public void delete() {
+        hologram.delete();
+        inventory.clear();
+    }
+
     public void updateHologram() {
-        hologram.setLine(1, ChatColor.translateAlternateColorCodes('&', "&7[&c"+size()+"/"+getTier().getAmount()+"&7]"));
-        hologram.despawn();
-        hologram.spawn();
+        YamlConfiguration config = core.getMainConfig().getConfig();
+        hologram.clearLines();
+        hologram.appendTextLine(ChatUtils.format(config.getString("Messages.Candy-Title")));
+        hologram.appendTextLine(ChatUtils.format(config.getString("Messages.Candy-Items").replace("%total%",String.valueOf(getTier().getAmount())).replace("%amount%",String.valueOf(size()))));
+        hologram.appendTextLine(ChatUtils.format(config.getString("Messages.Candy-Tier").replace("%tier%",getTier().getName())));
     }
 }

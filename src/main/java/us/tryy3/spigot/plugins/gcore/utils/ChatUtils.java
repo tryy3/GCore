@@ -1,6 +1,7 @@
 package us.tryy3.spigot.plugins.gcore.utils;
 
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.command.CommandSender;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,5 +18,13 @@ public class ChatUtils {
         }
 
         return retString;
+    }
+
+    public static void chat(CommandSender player, String message) {
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', message));
+    }
+
+    public static String format(String message) {
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 }

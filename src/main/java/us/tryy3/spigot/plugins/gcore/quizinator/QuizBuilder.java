@@ -40,7 +40,7 @@ public class QuizBuilder {
         }
 
         public boolean hasNext() {
-            return (currentStep >= (steps.size()-1));
+            return (currentStep < (steps.size()-1));
         }
 
         public boolean nextStep(String arg) {
@@ -50,8 +50,8 @@ public class QuizBuilder {
             return true;
         }
 
-        public void failStep() {
-            steps.get(currentStep).fail();
+        public void failStep(String msg) {
+            steps.get(currentStep).fail(msg);
         }
     }
 }

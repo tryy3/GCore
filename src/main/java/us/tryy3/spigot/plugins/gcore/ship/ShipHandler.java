@@ -54,16 +54,21 @@ public class ShipHandler {
 
     public void activateShip(UUID uuid, Warp warp) {
         ArmorStand stand;
+        Direction direction;
 
         if (waitingShip.containsKey(uuid)) {
             stand = waitingShip.get(uuid).getStand();
+            direction = waitingShip.get(uuid).getDirection();
             waitingShip.remove(uuid);
         } else {
             stand = createShip(uuid, warp.getFrom(), warp.getFrom().getLocation());
+            direction = warp.getFrom().getDirection();
         }
 
-        RunningShip running = new RunningShip(core, uuid, warp, stand, warp.getFrom().getDirection());
+        stand.setGravity(true);
+        RunningShip running = new RunningShip(core, uuid, warp, stand, direction);
         runningShips.put(uuid, running);
+        running.runTaskTimer(core, 0L, 1L);
 
         addPosition(uuid, warp.getTo().getLocation());
     }

@@ -8,7 +8,7 @@ import org.bukkit.Location;
  */
 public class LocationUtils {
     public static String LocationToString(Location location) {
-        String loc = location.getWorld() + ";";
+        String loc = location.getWorld().getName() + ";";
         loc += location.getX() + ";";
         loc += location.getY() + ";";
         loc += location.getZ();

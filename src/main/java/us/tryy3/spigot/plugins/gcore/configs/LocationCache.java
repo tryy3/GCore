@@ -41,6 +41,8 @@ public class LocationCache {
             Map<String, Object> warp = new HashMap<>();
             warp.put("From", location.getFrom().getName());
             warp.put("To", location.getTo().getName());
+            warp.put("Name", location.getName());
+            warp.put("Name", location.getName());
             warps.put(entry.getKey(), warp);
         }
 
@@ -56,7 +58,14 @@ public class LocationCache {
             zone.put("Location", LocationUtils.LocationToString(landzone.getLocation()));
             if (landzone.getShip() != null) zone.put("Ships", landzone.getShip());
             if (landzone.getCommand() != null) zone.put("Command", landzone.getCommand());
-            if (landzone.getDirection() != null) zone.put("Direction", landzone.getDirection().getDir());
+            if (landzone.getDirections() != null) {
+                Direction[] directions = landzone.getDirections();
+                String str = "";
+                for (Direction dir : directions) {
+                    str = dir.getDir()+",";
+                }
+                zone.put("Direction", str.substring(0, str.length()-1));
+            }
             landzones.put(landzone.getName(), zone);
         }
 
@@ -84,6 +93,17 @@ public class LocationCache {
     }
 
     public void load() {
+        if (!(file.exists())) {
+            File parent = file.getParentFile();
+            if (!(parent.exists())) {
+                parent.mkdirs();
+            }
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
         try {
             config.load(file);
         } catch (IOException | InvalidConfigurationException e) {
@@ -93,46 +113,62 @@ public class LocationCache {
         this.landzones = new HashMap<>();
         this.warpPlayers = new HashMap<>();
 
-        Map<String, Object> landzones = config.getConfigurationSection("Landzones").getValues(false);
+        if (config.contains("Landzones")) {
+            Map<String, Object> landzones = config.getConfigurationSection("Landzones").getValues(false);
 
-        for (Map.Entry<String, Object> landzone : landzones.entrySet()) {
-            Landzone zone = new Landzone(landzone.getKey(),
-                    LocationUtils.LocationFromString(config.getString("Landzones."+landzone.getKey()+".Location")),
-                    (config.contains("Landzones."+landzone.getKey()+".Ships")) ?
-                            config.getStringList("Landzones."+landzone.getKey()+".Ships") :
-                            null,
-                    (config.contains("Landzones."+landzone.getKey()+".Direction")) ?
-                            Direction.getDir(config.getString("Landzones."+landzone.getKey()+".Direction")) :
-                            null,
-                    (config.contains("Landzones."+landzone.getKey()+".Command")) ?
-                            config.getString("Landzones."+landzone.getKey()+".Command") :
-                            null);
-            this.landzones.put(landzone.getKey(),zone);
+            for (Map.Entry<String, Object> landzone : landzones.entrySet()) {
+                String[] dirs = null;
+                Direction[] directions;
+                if (!(config.contains("Landzones."+landzone.getKey()+".Direction"))) {
+                    directions = null;
+                } else {
+                    dirs = config.getString("Landzones."+landzone.getKey()+".Direction").split(",");
+                    directions = new Direction[dirs.length];
+                    for (int i = 0; i < dirs.length; i++) {
+                        directions[i] = Direction.getDir(Integer.parseInt(dirs[i]));
+                    }
+                }
+
+                Landzone zone = new Landzone(landzone.getKey(),
+                        LocationUtils.LocationFromString(config.getString("Landzones." + landzone.getKey() + ".Location")),
+                        (config.contains("Landzones." + landzone.getKey() + ".Ships")) ?
+                                config.getStringList("Landzones." + landzone.getKey() + ".Ships") :
+                                null,
+                        directions,
+                        (config.contains("Landzones." + landzone.getKey() + ".Command")) ?
+                                config.getString("Landzones." + landzone.getKey() + ".Command") :
+                                null);
+                this.landzones.put(landzone.getKey(), zone);
+            }
         }
 
-        Map<String, Object> warps = config.getConfigurationSection("Warps").getValues(false);
+        if (config.contains("Warps")) {
+            Map<String, Object> warps = config.getConfigurationSection("Warps").getValues(false);
 
-        for (Map.Entry<String, Object> warp : warps.entrySet()) {
-            if (!isLandzone(config.getString("Warps."+warp.getKey()+".From"))) {
-                core.getLogger().warning("The warp "+warp.getKey()+" has a invalid from landzone.");
-                return;
-            }
-            if (!isLandzone(config.getString("Warps."+warp.getKey()+".To"))) {
-                core.getLogger().warning("The warp "+warp.getKey()+" has a invalid to landzone.");
-                return;
-            }
+            for (Map.Entry<String, Object> warp : warps.entrySet()) {
+                if (!isLandzone(config.getString("Warps." + warp.getKey() + ".From"))) {
+                    core.getLogger().warning("The warp " + warp.getKey() + " has a invalid from landzone.");
+                    return;
+                }
+                if (!isLandzone(config.getString("Warps." + warp.getKey() + ".To"))) {
+                    core.getLogger().warning("The warp " + warp.getKey() + " has a invalid to landzone.");
+                    return;
+                }
 
-            this.warps.put(warp.getKey(), new Warp(config.getString("Warps."+warp.getKey()+".Name"),
-                    this.landzones.get(config.getString("Warps."+warp.getKey()+".From")),
-                    this.landzones.get(config.getString("Warps."+warp.getKey()+".To"))));
+                this.warps.put(warp.getKey(), new Warp(config.getString("Warps." + warp.getKey() + ".Name"),
+                        this.landzones.get(config.getString("Warps." + warp.getKey() + ".From")),
+                        this.landzones.get(config.getString("Warps." + warp.getKey() + ".To"))));
+            }
         }
 
-        Map<String, Object> players = config.getConfigurationSection("Players").getValues(false);
+        if (config.contains("Players")) {
+            Map<String, Object> players = config.getConfigurationSection("Players").getValues(false);
 
-        for (Map.Entry<String, Object> player : players.entrySet()) {
-            UUID uuid = UUID.fromString(player.getKey());
+            for (Map.Entry<String, Object> player : players.entrySet()) {
+                UUID uuid = UUID.fromString(player.getKey());
 
-            this.warpPlayers.put(uuid, new PlayerPosition(uuid, LocationUtils.LocationFromString((String) player.getValue())));
+                this.warpPlayers.put(uuid, new PlayerPosition(uuid, LocationUtils.LocationFromString((String) player.getValue())));
+            }
         }
     }
 
@@ -180,6 +216,18 @@ public class LocationCache {
         return warps;
     }
 
+    public Map<String, Warp> getWarps(String landzone) {
+        Map<String, Warp> retWarp = new HashMap<>();
+        for (Map.Entry<String, Warp> warp: warps.entrySet()) {
+            if (!(warp.getValue().getFrom().getName().equalsIgnoreCase(landzone)) ||
+                    !(warp.getValue().getTo().getName().equalsIgnoreCase(landzone))) continue;
+
+            retWarp.put(warp.getKey(), warp.getValue());
+        }
+
+        return retWarp;
+    }
+
     private String getWarpID(String name) {
         if (this.warps.containsKey(name)) return name;
 
@@ -192,6 +240,10 @@ public class LocationCache {
 
     public YamlConfiguration getConfig() {
         return config;
+    }
+
+    public File getFile() {
+        return file;
     }
 
     public boolean isPlayer(UUID uuid) {
@@ -210,6 +262,7 @@ public class LocationCache {
 
     public void teleportPlayer(UUID uuid) {
         Bukkit.getPlayer(uuid).teleport(warpPlayers.get(uuid).getLocation());
+        System.out.println(warpPlayers.get(uuid).getLocation());
         delPlayer(uuid);
     }
 }

@@ -7,6 +7,7 @@ import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import us.tryy3.spigot.plugins.gcore.GCore;
+import us.tryy3.spigot.plugins.gcore.utils.ChatUtils;
 
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
  */
 public class RunningShip extends BukkitRunnable {
     private UUID uuid;
-    private double count;
+    private int count;
     private ArmorStand ship;
     private Warp warp;
     private GCore core;
@@ -26,7 +27,7 @@ public class RunningShip extends BukkitRunnable {
         this.core = core;
         this.ship = ship;
         this.direction = direction;
-        this.count = Math.random()*10+21;
+        this.count = (int) (Math.random()*140+61);
         this.warp = warp;
     }
 
@@ -35,7 +36,8 @@ public class RunningShip extends BukkitRunnable {
         Player player = Bukkit.getServer().getPlayer(uuid);
         ship.setVelocity(player.getLocation().getDirection().multiply(3).setY(1));
         Location l = ship.getLocation();
-        getDirection(l,3);
+        getDirection(l,1);
+        System.out.println(count);
         player.playEffect(l, Effect.LARGE_SMOKE, 20);
 
         count--;
@@ -43,7 +45,7 @@ public class RunningShip extends BukkitRunnable {
 
         core.getShipHandler().deactivateShip(player.getUniqueId());
         core.getCache().teleportPlayer(player.getUniqueId());
-        player.sendMessage(core.getMainConfig().getConfig().getString("Messages.Arrived-At").replace("%landing-pad%",warp.getTo().getName()));
+        ChatUtils.chat(player, core.getMainConfig().getConfig().getString("Messages.Arrived-At").replace("%warp%", warp.getTo().getName()));
 
         if (warp.getTo().hasCommand()) {
             String toExecute = warp.getTo().getCommand().replace("%player%", player.getName());
@@ -53,12 +55,14 @@ public class RunningShip extends BukkitRunnable {
     }
 
     private void getDirection(Location location, int speed) {
+        System.out.println(speed);
+        System.out.println(location);
         switch (direction) {
             case UP:
-                location.setY(location.getY()-speed);
+                location.setY(location.getY()+speed);
                 break;
             case DOWN:
-                location.setY(location.getY()+speed);
+                location.setY(location.getY()-speed);
                 break;
             case SOUTH:
                 location.setZ(location.getZ()+speed);
@@ -73,6 +77,7 @@ public class RunningShip extends BukkitRunnable {
                 location.setX(location.getX()-speed);
                 break;
         }
+        System.out.println(location);
     }
 
     public ArmorStand getShip() {

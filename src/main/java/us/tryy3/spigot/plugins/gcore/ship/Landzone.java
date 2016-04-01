@@ -3,7 +3,9 @@ package us.tryy3.spigot.plugins.gcore.ship;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by tryy3 on 2016-03-13.
@@ -13,9 +15,9 @@ public class Landzone {
     private Location location;
     private String command;
     private List<String> ship;
-    private Direction direction;
+    private Direction[] direction;
 
-    public Landzone(String name, Location location, List<String> ship, Direction direction, String command) {
+    public Landzone(String name, Location location, List<String> ship, Direction[] direction, String command) {
         this.name = name;
         this.location = location;
         this.ship = ship;
@@ -51,6 +53,12 @@ public class Landzone {
     }
 
     public Direction getDirection() {
+        Random random = new Random();
+        int i = random.nextInt(direction.length);
+        return direction[i];
+    }
+
+    public Direction[] getDirections() {
         return direction;
     }
 }

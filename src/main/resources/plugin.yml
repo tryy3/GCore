@@ -1,0 +1,9 @@
+name: GCore
+authors: [maldahleh, tryy3]
+version: 2.0.0
+main: us.tryy3.spigot.plugins.gcore.GCore
+softdepend: [HolographicDisplays]
+
+commands:
+  gcore:
+    description: Base command for the GCore plugin.
